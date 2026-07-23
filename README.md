@@ -61,13 +61,15 @@ GPU側の`AudioSeparator.run()`はステムごとのbytesを辞書（例：`{"vo
 ### 実行方法
 
 ```shell
-# 既定(6-stem: vocals/drums/bass/guitar/piano/other)
+# 既定(4-stem: vocals/drums/bass/other)
 modal run separate.py --input-path ./song.mp3
 # または
 make separate INPUT=./song.mp3
 
 # モデルを明示指定(例: 2-stemで高品質なvocals/instrumental分離)
 modal run separate.py --input-path ./song.mp3 --model-filename model_bs_roformer_ep_317_sdr_12.9755.ckpt
+# 例：6-stem
+modal run separate.py --input-path ./song.mp3 --model-filename htdemucs_6s.yaml
 ```
 
 分離結果は `separated/<元ファイル名>/` 以下に保存される。

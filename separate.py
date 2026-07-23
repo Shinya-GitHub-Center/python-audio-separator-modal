@@ -55,7 +55,8 @@ model_cache = modal.Volume.from_name(
 # instrumental) if you only need vocal removal.
 
 # DEFAULT_MODEL = "model_bs_roformer_ep_317_sdr_12.9755.ckpt"
-DEFAULT_MODEL = "htdemucs_6s.yaml"
+# DEFAULT_MODEL = "htdemucs_6s.yaml"
+DEFAULT_MODEL = "htdemucs_ft.yaml"
 
 # ## Running audio separation on Modal
 
@@ -66,7 +67,7 @@ app = modal.App("audio-separator")
 class AudioSeparator:
     @modal.enter()
     def init(self):
-        from audio_separator.separator import ( # pyright: ignore[reportMissingImports]
+        from audio_separator.separator import (  # pyright: ignore[reportMissingImports]
             Separator,
         )
 
