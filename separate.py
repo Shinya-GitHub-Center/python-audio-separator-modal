@@ -47,18 +47,19 @@ model_cache = modal.Volume.from_name(
     "audio-separator-model-cache", create_if_missing=True
 )
 
-# BS-Roformer (trained by viperx) is one of the highest-quality open source
-# vocal / instrumental separation models available today (SDR ~12.9 for
-# vocals), and it's actively maintained as part of the `audio-separator`
-# model zoo. Run `audio-separator --list_models` for other options, e.g.
-# multi-stem Demucs models like `htdemucs_6s.yaml` for
-# vocals/drums/bass/guitar/piano/other.
+# `htdemucs_6s.yaml` is Demucs v4's 6-stem model, splitting audio into
+# vocals, drums, bass, guitar, piano, and other -- a full instrument-level
+# breakdown rather than just vocals/instrumental. Run
+# `audio-separator --list_models` for other options, e.g. the higher-SDR but
+# 2-stem-only `model_bs_roformer_ep_317_sdr_12.9755.ckpt` (vocals /
+# instrumental) if you only need vocal removal.
 
-DEFAULT_MODEL = "model_bs_roformer_ep_317_sdr_12.9755.ckpt"
+# DEFAULT_MODEL = "model_bs_roformer_ep_317_sdr_12.9755.ckpt"
+DEFAULT_MODEL = "htdemucs_6s.yaml"
 
 # ## Running audio separation on Modal
 
-app = modal.App("example-separate-audio")
+app = modal.App("audio-separator")
 
 
 @app.cls(gpu="t4", image=image, volumes={model_cache_dir: model_cache})
